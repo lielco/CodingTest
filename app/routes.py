@@ -4,7 +4,7 @@ from flask import jsonify
 # error handling
 @app.errorhandler(auth.AuthError)
 def handle_auth_error(ex):
-    response = jsonify(ex.error)
+    response = jsonify(ex.to_dict())
     response.status_code = ex.status_code
     return response
 
@@ -16,4 +16,4 @@ def health():
 @app.route('/api/param-test/<param>', methods=['GET'])
 @auth.token_required
 def param(param):
-    return {"param" : param}
+    return jsonify(param=param)
